@@ -1,14 +1,26 @@
 // src/components/SearchBar.jsx
+import './SearchBar.scss'      // 引入同目錄下的 SCSS
+import InputGroup from 'react-bootstrap/InputGroup'
+import Form from 'react-bootstrap/Form'
+import { FaSearch } from 'react-icons/fa'
+
 export default function SearchBar({ value, onChange }) {
   return (
-    <div className="mb-4">
-      <input
-        type="text"
-        className="form-control"
-        placeholder="搜尋茶飲名稱…"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-      />
+    <div className="mb-4 search-bar">
+      <InputGroup className="search-bar__group">
+        <InputGroup.Text id="search-addon" className="search-bar__icon">
+          <FaSearch />
+        </InputGroup.Text>
+        <Form.Control
+          type="text"
+          placeholder="搜尋商品"
+          aria-label="搜尋茶飲"
+          aria-describedby="search-addon"
+          value={value}
+          onChange={e => onChange(e.target.value)}
+          className="search-bar__input"
+        />
+      </InputGroup>
     </div>
   );
 }

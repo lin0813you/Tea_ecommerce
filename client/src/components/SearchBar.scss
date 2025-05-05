@@ -1,0 +1,49 @@
+.search-bar {
+    display: flex;
+    justify-content: center;
+  
+    &__group {
+      width: 100%;
+      max-width: 500px;          // 最寬 500px
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      border-radius: 9999px;     // 完全圓角
+      overflow: hidden;          // 保持圓弧不被內部元素蓋住
+      transition: box-shadow 0.2s ease;
+  
+      &:hover {
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+      }
+  
+      &:focus-within {
+        box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+      }
+    }
+  
+    &__icon {
+      background-color: #fff;
+      border: none;
+      padding: 0.75rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+  
+      svg {
+        width: 1.25rem;
+        height: 1.25rem;
+        color: #007bff;
+      }
+    }
+  
+    &__input {
+      border: none;
+      padding: 0.75rem 1rem;
+      font-size: 1rem;
+      outline: none;
+  
+      &::placeholder {
+        color: #aaa;
+        opacity: 1;  // 保持 placeholder 顯色
+      }
+    }
+  }
+  
