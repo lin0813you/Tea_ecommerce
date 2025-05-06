@@ -2,7 +2,7 @@
 import React from 'react'
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
-import './ProductCard.scss'
+
 
 export default function ProductCard({ product, onAddCart }) {
   return (

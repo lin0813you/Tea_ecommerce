@@ -1,5 +1,5 @@
 // src/components/SearchBar.jsx
-import './SearchBar.scss'      // 引入同目錄下的 SCSS
+
 import InputGroup from 'react-bootstrap/InputGroup'
 import Form from 'react-bootstrap/Form'
 import { FaSearch } from 'react-icons/fa'

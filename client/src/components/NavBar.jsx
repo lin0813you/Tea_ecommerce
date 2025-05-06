@@ -4,7 +4,7 @@ import Container from 'react-bootstrap/Container'
 import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
 import { FaShoppingCart, FaUser } from 'react-icons/fa'
-import './NavBar.scss'
+
 
 export default function NavBar({ user, cartCount }) {
   return (

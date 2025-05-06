@@ -4,7 +4,6 @@ import { fetchProducts }    from '../api/product'
 import ProductCard          from '../components/ProductCard'
 import SearchBar            from '../components/SearchBar'
 import NavBar               from '../components/NavBar'
-import './CustomerMainPage.scss'
 
 export default function CustomerMainPage() {
   const [products, setProducts] = useState([])
