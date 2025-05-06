@@ -1,0 +1,51 @@
+// src/components/NavBar.scss
+
+.navbar-teashop {
+  width: 100%;
+  height: 60px;       // ← 這裡要和實際導覽列高度一致
+  z-index: 1000;      // ← 確保在最上層
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+
+  &__brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+  }
+
+  &__nav {
+    display: flex;
+    align-items: center;
+
+    .nav-link {
+      margin-left: 1.5rem;
+      font-size: 1rem;
+      color: #555;
+      display: flex;
+      align-items: center;
+      position: relative;
+
+      &:hover,
+      &.active {
+        color: #007bff !important;
+      }
+
+      svg {
+        margin-right: 0.25rem;
+      }
+    }
+
+    .cart-badge {
+      background-color: #e63946;
+      color: #fff;
+      border-radius: 50%;
+      padding: 0.15rem 0.5rem;
+      font-size: 0.75rem;
+      position: absolute;
+      top: -0.4rem;
+      right: -0.8rem;
+    }
+  }
+}
