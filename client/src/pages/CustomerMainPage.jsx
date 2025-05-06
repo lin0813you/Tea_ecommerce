@@ -1,17 +1,19 @@
 // src/pages/CustomerMainPage.jsx
 import { useEffect, useState } from "react";
-import { fetchProducts } from "../api/product";
-import ProductCard from "../components/ProductCard";
-import SearchBar from "../components/SearchBar";
-import NavBar from "../components/NavBar";
-import Carousel from "../components/Carousel";
+import { fetchProducts }         from "../api/product";
+import ProductCard               from "../components/ProductCard";
+import SearchBar                 from "../components/SearchBar";
+import NavBar                    from "../components/NavBar";
+import Carousel                  from "../components/Carousel";
+import FilterBar                 from "../components/FilterBar";
 
 export default function CustomerMainPage() {
   const [products, setProducts] = useState([]);
-  const [query, setQuery] = useState("");
+  const [query,    setQuery]    = useState("");
+  const [filter,   setFilter]   = useState("All");
 
   // TODO: 之後從 Context 或 API 拿到真正的 user/cartCount
-  const mockUser = { name: "小明" };
+  const mockUser      = { name: "小明" };
   const mockCartCount = 3;
 
   useEffect(() => {
@@ -22,9 +24,15 @@ export default function CustomerMainPage() {
       .catch((err) => console.error(err));
   }, []);
 
-  const filtered = (products ?? []).filter((p) =>
-    p.name.toLowerCase().includes(query.toLowerCase())
-  );
+  // 1. 動態萃取出所有 type，前面加上「All」
+  const types = ["All", 
+    ...Array.from(new Set(products.map((p) => p.type)))
+  ];
+
+  // 2. 先依 filter（類別）再依 query（關鍵字）過濾
+  const filtered = (products ?? [])
+    .filter((p) => filter === "All" || p.type === filter)
+    .filter((p) => p.name.toLowerCase().includes(query.toLowerCase()));
 
   return (
     <>
@@ -33,13 +41,20 @@ export default function CustomerMainPage() {
 
       {/* 2. 主內容容器 */}
       <div className="container py-4 main-container">
-        
+        {/* 3. 輪播 */}
         <Carousel />
 
-        {/* 3. 搜尋列
-        <SearchBar value={query} onChange={setQuery} /> */}
+        {/* 4. 搜尋列 */}
+        <SearchBar value={query} onChange={setQuery} />
 
-        {/* 4. 商品列表 */}
+        {/* 5. 分類列 */}
+        <FilterBar
+          types={types}
+          activeType={filter}
+          onSelectType={(key) => setFilter(key)}
+        />
+
+        {/* 6. 商品列表 */}
         <div className="row g-4">
           {filtered.map((p) => (
             <div key={p.id} className="col-12 col-sm-6 col-md-4 col-lg-3">

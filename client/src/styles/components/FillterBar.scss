@@ -1,0 +1,35 @@
+.filter-bar {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    margin: 1.5rem 0;
+    padding-bottom: 0.5rem;
+  
+    // 隱藏滾動條（Webkit）
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    -ms-overflow-style: none;  /* IE 10+ */
+    scrollbar-width: none;     /* Firefox */
+  
+    .nav-link {
+      flex-shrink: 0;
+      padding: 0.5rem 1rem;
+      border-radius: 999px;
+      border: 1px solid #ddd;
+      color: #555;
+      transition: background 0.2s, color 0.2s;
+  
+      &.active {
+        background: #007bff;
+        color: #fff;
+        border-color: #007bff;
+      }
+  
+      &:hover {
+        background: rgba(0, 123, 255, 0.1);
+        color: #007bff;
+      }
+    }
+  }
+  
