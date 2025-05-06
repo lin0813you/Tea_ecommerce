@@ -7,6 +7,7 @@ export default function CustomerMainPage() {
   const [products, setProducts] = useState([]); 
   const [query, setQuery] = useState('');
 
+ 
   useEffect(() => {
     fetchProducts()
       .then(data => {
@@ -16,6 +17,7 @@ export default function CustomerMainPage() {
       })
       .catch(err => console.error(err));
   }, []);
+  
 
   const filtered = (products ?? []).filter(p =>
     p.name.toLowerCase().includes(query.toLowerCase())

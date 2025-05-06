@@ -1,0 +1,66 @@
+// src/components/ProductCard.scss
+
+.product-card {
+    width: 100%;
+    max-width: 18rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    }
+  
+    &__image-wrapper {
+      position: relative;
+      padding-top: 56.25%; // 16:9 比例
+      overflow: hidden;
+    }
+    &__image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  
+    &__body {
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+    }
+  
+    &__title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+  
+    &__description {
+      flex-grow: 1;
+      font-size: 0.875rem;
+      color: #666;
+      margin-bottom: 1rem;
+    }
+  
+    &__footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  
+    &__price {
+      font-size: 1.25rem;
+      font-weight: bold;
+      color: #e63946;
+    }
+  
+    &__button {
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+    }
+  }
+  

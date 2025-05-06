@@ -1,15 +1,39 @@
 // src/components/ProductCard.jsx
-export default function ProductCard({ product }) {
+import React from 'react'
+import Card from 'react-bootstrap/Card'
+import Button from 'react-bootstrap/Button'
+import './ProductCard.scss'
+
+export default function ProductCard({ product, onAddCart }) {
   return (
-    <div className="card h-100">
-      <img src={product.imageUrl} className="card-img-top" alt={product.name} />
-      <div className="card-body d-flex flex-column">
-        <h5 className="card-title">{product.name}</h5>
-        <p className="card-text text-muted flex-grow-1">
-          ${product.price.toFixed(2)}
-        </p>
-        <button className="btn btn-success mt-2">加入購物車</button>
+    <Card className="product-card">
+      <div className="product-card__image-wrapper">
+        <Card.Img
+          variant="top"
+          src={product.imageUrl}
+          alt={product.name}
+          className="product-card__image"
+        />
       </div>
-    </div>
-  );
+      <Card.Body className="product-card__body">
+        <Card.Title className="product-card__title">
+          {product.name}
+        </Card.Title>
+        <Card.Text className="product-card__description">
+          {product.description}
+        </Card.Text>
+        <div className="product-card__footer">
+          <span className="product-card__price">
+            ${product.price.toFixed(2)}
+          </span>
+          <Button
+            className="product-card__button"
+            onClick={() => onAddCart(product)}
+          >
+            加入購物車
+          </Button>
+        </div>
+      </Card.Body>
+    </Card>
+  )
 }
