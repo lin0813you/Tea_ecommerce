@@ -1,4 +1,5 @@
-@use './components/NavBar';
-@use './components/SearchBar';
-@use './components/ProductCard';
-@use './pages/customerMainPage';
+@use './components/NavBar.scss';
+@use './components/SearchBar.scss';
+@use './components/ProductCard.scss';
+@use './pages/customerMainPage.scss';
+@use './components/Carousel.scss'
