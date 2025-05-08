@@ -1,0 +1,15 @@
+.products-page {
+    .controls {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+  
+    @media (min-width: 576px) {
+      .controls {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
+  }

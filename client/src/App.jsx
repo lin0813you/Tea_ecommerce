@@ -1,13 +1,26 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import CustomerMainPage from './pages/CustomerMainPage';
+// src/App.jsx
+import React from 'react'
+import { Routes, Route } from 'react-router-dom'
+import NavBar           from './components/NavBar'
+import HomePage         from './pages/HomePage'
+import ProductsPage     from './pages/ProductsPage'
 
-export default function App() {
+
+function App() {
+  const mockUser      = { name: '小明' }
+  const mockCartCount = 3
+
   return (
-    <BrowserRouter>
+    <>
+      <NavBar user={mockUser} cartCount={mockCartCount} />
       <Routes>
-        <Route path="/" element={<CustomerMainPage />} />
-        {/* 未來可新增 /cart, /order-history 等路由 */}
+        <Route path="/"        element={<HomePage />} />
+        <Route path="/products" element={<ProductsPage />} />
+        {/* 其他路由像 /cart, /profile… */}
       </Routes>
-    </BrowserRouter>
-  );
+    </>
+  )
 }
+
+export default App
+
