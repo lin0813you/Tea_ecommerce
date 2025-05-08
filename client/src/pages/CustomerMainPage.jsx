@@ -1,19 +1,20 @@
 // src/pages/CustomerMainPage.jsx
 import { useEffect, useState } from "react";
-import { fetchProducts }         from "../api/product";
-import ProductCard               from "../components/ProductCard";
-import SearchBar                 from "../components/SearchBar";
-import NavBar                    from "../components/NavBar";
-import Carousel                  from "../components/Carousel";
-import FilterBar                 from "../components/FilterBar";
+import { fetchProducts } from "../api/product";
+import ProductCard from "../components/ProductCard";
+import SearchBar from "../components/SearchBar";
+import NavBar from "../components/NavBar";
+import Carousel from "../components/Carousel";
+import FilterBar from "../components/FilterBar";
+
 
 export default function CustomerMainPage() {
   const [products, setProducts] = useState([]);
-  const [query,    setQuery]    = useState("");
-  const [filter,   setFilter]   = useState("All");
+  const [query, setQuery] = useState("");
+  const [filter, setFilter] = useState("All");
 
   // TODO: 之後從 Context 或 API 拿到真正的 user/cartCount
-  const mockUser      = { name: "小明" };
+  const mockUser = { name: "小明" };
   const mockCartCount = 3;
 
   useEffect(() => {
@@ -25,9 +26,7 @@ export default function CustomerMainPage() {
   }, []);
 
   // 1. 動態萃取出所有 type，前面加上「All」
-  const types = ["All", 
-    ...Array.from(new Set(products.map((p) => p.type)))
-  ];
+  const types = ["All", ...Array.from(new Set(products.map((p) => p.type)))];
 
   // 2. 先依 filter（類別）再依 query（關鍵字）過濾
   const filtered = (products ?? [])
@@ -43,6 +42,8 @@ export default function CustomerMainPage() {
       <div className="container py-4 main-container">
         {/* 3. 輪播 */}
         <Carousel />
+
+  
 
         {/* 4. 搜尋列 */}
         <SearchBar value={query} onChange={setQuery} />
