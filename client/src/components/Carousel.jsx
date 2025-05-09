@@ -1,6 +1,7 @@
 // File: src/components/Carousel.jsx
 import React from "react";
 import BootstrapCarousel from "react-bootstrap/Carousel";
+import '../styles/components/Carousel.scss';
 
 
 const slides = [

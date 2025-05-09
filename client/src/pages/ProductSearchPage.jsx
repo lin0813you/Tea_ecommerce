@@ -4,6 +4,7 @@ import SearchBar from '../components/SearchBar';
 import FilterBar from '../components/FilterBar';
 import ProductCard from '../components/ProductCard';
 import { mockProducts } from '../data/mockProducts'; // Assuming mock data for now
+import '../styles/pages/productSearchPage.scss'; // Import the new SCSS file
 
 
 const ProductSearchPage = () => { // Renamed component to ProductSearchPage
@@ -30,7 +31,7 @@ const ProductSearchPage = () => { // Renamed component to ProductSearchPage
 
   const filteredProducts = products.filter(product => {
     const matchesQuery = product.name.toLowerCase().includes(query.toLowerCase());
-    const matchesFilter = filter === '' || product.type === filter;
+    const matchesFilter = filter === '' || filter === 'All' || product.type === filter;
     return matchesQuery && matchesFilter;
   });
 

@@ -1,6 +1,7 @@
 // src/components/FilterBar.jsx
 import React from 'react'
 import Nav from 'react-bootstrap/Nav'
+import '../styles/components/FillterBar.scss';
 
 export default function FilterBar({ types, activeType, onSelectType }) {
   return (

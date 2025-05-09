@@ -3,6 +3,7 @@
 import InputGroup from 'react-bootstrap/InputGroup'
 import Form from 'react-bootstrap/Form'
 import { FaSearch } from 'react-icons/fa'
+import '../styles/components/SearchBar.scss';
 
 export default function SearchBar({ value, onChange }) {
   return (

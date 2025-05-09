@@ -1,6 +1,7 @@
 import React from 'react'
 import Card from 'react-bootstrap/Card'
 // import Button from 'react-bootstrap/Button'  // 暫時註解掉
+import '../styles/components/ProductCard.scss';
 
 export default function ProductCard({ product /*, onAddCart */ }) {
   return (
