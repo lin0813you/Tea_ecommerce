@@ -1,15 +1,17 @@
 // src/pages/CustomerMainPage.jsx
 import { useEffect, useState } from "react";
-import { fetchProducts }         from "../api/product";
-import NavBar                    from "../components/NavBar";
-import Carousel                  from "../components/Carousel";
+import { fetchProducts } from "../api/product";
+import NavBar from "../components/NavBar";
+import Carousel from "../components/Carousel";
+import HeroSection from "../components/HeroSection"; // Import the new component
+import ImageTextSection from "../components/ImageTextSection";
 
 export default function CustomerMainPage() {
   const [products, setProducts] = useState([]);
-  const [query,    setQuery]    = useState("");
+  const [query, setQuery] = useState("");
 
   // TODO: 之後從 Context 或 API 拿到真正的 user/cartCount
-  const mockUser      = { name: "小明" };
+  const mockUser = { name: "小明" };
   const mockCartCount = 3;
 
   useEffect(() => {
@@ -35,6 +37,11 @@ export default function CustomerMainPage() {
         {/* 3. 輪播 */}
         <Carousel />
 
+        {/* Add the new ImageTextSection component here */}
+        <ImageTextSection />
+
+        {/* Add the new HeroSection component here */}
+        <HeroSection />
       </div>
     </>
   );

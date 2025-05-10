@@ -1,0 +1,63 @@
+.hero-section {
+  margin-top: 2rem;
+
+  .animated-image-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 75%; /* Maintain aspect ratio, adjust as needed */
+    overflow: hidden; /* Hide parts of the image that overflow during animation */
+  }
+
+  .animated-image {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+    background-image: url("/images/image6.png"); /* Updated image path */
+    // Add your animation properties here
+    // Example: simple fade-in animation
+    animation: fadeIn 1s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+
+  .hero-section__news {
+    padding: 2rem;
+    background-color: var(--color-pampas); /* Use the color variable */
+
+    h2 {
+      margin-bottom: 1.5rem;
+      color: var(--color-secondary); /* Use the color variable */
+    }
+
+    ul {
+      padding: 0;
+    }
+
+    li {
+      margin-bottom: 1rem;
+      border-bottom: 1px solid #ddd; /* Separator line */
+      padding-bottom: 1rem;
+
+      &:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+      }
+    }
+
+    .news-link {
+      text-decoration: none;
+      color: var(--color-secondary-700); /* Use the color variable */
+      font-size: 1rem;
+
+      &:hover {
+        color: var(--color-secondary-900); /* Use the color variable */
+      }
+    }
+  }
+}

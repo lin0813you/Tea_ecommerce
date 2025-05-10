@@ -1,0 +1,70 @@
+.image-text-section {
+  .text-content {
+    h2 {
+      font-size: 24px;
+      // Add other text styles as needed
+    }
+
+    p {
+      font-size: 15px;
+      // Add other text styles as needed
+    }
+
+    .btn {
+      font-size: 20px;
+      // Add other button styles as needed
+    }
+  }
+
+  .image-gallery {
+    // Adjust spacing between images and overall alignment
+    gap: 1.75vw; // Approximation of the gap in the example
+
+    .image-wrapper {
+      width: 32.21%; // Approximation based on the first image wrapper width
+
+      &--one {
+        margin-top: 12vw; // Approximation of the top margin for the first image
+        // Add other styles for the first image wrapper if needed
+      }
+
+      &--two {
+        width: 36.01%; // Approximation based on the second image wrapper width
+        margin-left: 5vw; /* Adjusted margin to move the second image further to the right using relative units */
+        // Adjust alignment and spacing for the second image wrapper if needed
+      }
+
+      img {
+        display: block; // Ensure the image takes up the full width of its container
+        width: 100%;
+        height: auto; // Maintain aspect ratio
+      }
+    }
+  }
+
+  // Responsive adjustments
+  @media (max-width: 991.98px) { /* Equivalent to Bootstrap's lg breakpoint */
+    .image-gallery {
+      flex-direction: column; // Stack images vertically on smaller screens
+      align-items: center; // Center stacked images
+      gap: 20px; // Add some space between stacked images
+
+      .image-wrapper {
+        width: 80% !important; // Adjust width for smaller screens
+        margin-top: 0 !important; // Remove top margin when stacked
+        margin-left: 0 !important; /* Remove margin-left on smaller screens */
+      }
+    }
+
+    .text-content {
+        text-align: center; // Center text on smaller screens
+    }
+
+    .text-content .mt-4 {
+        text-align: center; // Center button on smaller screens
+    }
+
+
+  }
+
+}
