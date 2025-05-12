@@ -1,7 +1,6 @@
 // src/pages/CustomerMainPage.jsx
 import { useEffect, useState } from "react";
 import { fetchProducts } from "../api/product";
-import NavBar from "../components/NavBar";
 import Carousel from "../components/Carousel";
 import HeroSection from "../components/HeroSection"; // Import the new component
 import ImageTextSection from "../components/ImageTextSection";
@@ -9,10 +8,6 @@ import ImageTextSection from "../components/ImageTextSection";
 export default function CustomerMainPage() {
   const [products, setProducts] = useState([]);
   const [query, setQuery] = useState("");
-
-  // TODO: 之後從 Context 或 API 拿到真正的 user/cartCount
-  const mockUser = { name: "小明" };
-  const mockCartCount = 3;
 
   useEffect(() => {
     fetchProducts()
@@ -29,9 +24,6 @@ export default function CustomerMainPage() {
 
   return (
     <>
-      {/* 1. 導覽列放最上方 */}
-      <NavBar user={mockUser} cartCount={mockCartCount} />
-
       {/* 2. 主內容容器 */}
       <div className="container py-4 main-container">
         {/* 3. 輪播 */}

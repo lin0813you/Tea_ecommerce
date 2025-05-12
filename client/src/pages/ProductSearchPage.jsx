@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import NavBar from '../components/NavBar';
 import SearchBar from '../components/SearchBar';
 import FilterBar from '../components/FilterBar';
 import ProductCard from '../components/ProductCard';
@@ -37,7 +36,6 @@ const ProductSearchPage = () => { // Renamed component to ProductSearchPage
 
   return (
     <div>
-      <NavBar />
       <SearchBar onSearch={handleSearch} />
       <div className="filter-bar-container">
         <FilterBar
