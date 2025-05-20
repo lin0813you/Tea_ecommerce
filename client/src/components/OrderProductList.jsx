@@ -3,11 +3,12 @@ import React, { useState } from 'react';
 import { ListGroup, Image, Row, Col, Modal, Button } from 'react-bootstrap';
 import { mockProducts as products } from '../data/mockProducts.js';
 import ProductCustomization from './ProductCustomization';
+import { useCart } from '../context/CartContext'; // Import useCart
 
 const defaultCustomization = {
-  size: 'L', // Default size
-  ice: 'normal', // Default ice
-  sugar: 'full',   // Default sugar
+  size: 'L',
+  ice: 'normal',
+  sugar: 'full',
   quantity: 1,
 };
 
@@ -15,11 +16,11 @@ export default function OrderProductList() {
   const [showModal, setShowModal] = useState(false);
   const [currentProduct, setCurrentProduct] = useState(null);
   const [currentCustomization, setCurrentCustomization] = useState(defaultCustomization);
+  const { addToCart } = useCart(); // Use the addToCart function from context
 
   const handleShowModal = (product) => {
     setCurrentProduct(product);
-    // Reset customization to defaults when opening for a new product or reopening
-    setCurrentCustomization(defaultCustomization); 
+    setCurrentCustomization(defaultCustomization);
     setShowModal(true);
   };
 
@@ -34,13 +35,9 @@ export default function OrderProductList() {
 
   const handleAddToCart = () => {
     if (currentProduct && currentCustomization) {
-      console.log('Adding to cart:', {
-        product: currentProduct,
-        customization: currentCustomization,
-      });
-      // Here you would typically dispatch an action to add to cart in a real app
+      addToCart(currentProduct, currentCustomization); // Call context function
     }
-    handleCloseModal(); // Close modal after adding
+    handleCloseModal();
   };
 
   return (
@@ -50,7 +47,7 @@ export default function OrderProductList() {
           <Col md={6} key={product.id} className="mb-3">
             <ListGroup.Item action onClick={() => handleShowModal(product)} className="p-2 h-100">
               <Row className="align-items-center">
-                <Col xs={3} md={3} lg={2}> {/* Increased image column slightly for better spacing */}
+                <Col xs={3} md={3} lg={2}>
                   <Image src={product.imageUrl} alt={product.name} fluid />
                 </Col>
                 <Col xs={9} md={9} lg={10}>
@@ -72,7 +69,7 @@ export default function OrderProductList() {
           <Modal.Body>
             <ProductCustomization 
               productName={currentProduct.name} 
-              initialDetails={defaultCustomization} // Pass initial/reset details
+              initialDetails={defaultCustomization} 
               onCustomizationChange={handleCustomizationChange} 
             />
           </Modal.Body>

@@ -1,14 +1,16 @@
 // src/components/NavBar.jsx
-import React from 'react'
-import Container from 'react-bootstrap/Container'
-import Nav from 'react-bootstrap/Nav'
-import Navbar from 'react-bootstrap/Navbar'
+import React from 'react';
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
 import { Link } from 'react-router-dom';
-import { FaShoppingCart, FaUser } from 'react-icons/fa'
+import { FaShoppingCart, FaUser } from 'react-icons/fa';
 import '../styles/components/NavBar.scss';
+import { useCart } from '../context/CartContext'; // Import useCart
 
+export default function NavBar({ user }) { // Removed cartCount from props
+  const { cartCount } = useCart(); // Get cartCount from context
 
-export default function NavBar({ user, cartCount }) {
   return (
     <Navbar fixed="top" bg="light" className="navbar-teashop">
       <Container>
@@ -50,5 +52,5 @@ export default function NavBar({ user, cartCount }) {
         </Nav>
       </Container>
     </Navbar>
-  )
+  );
 }

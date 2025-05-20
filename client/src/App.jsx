@@ -1,22 +1,24 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+// client/src/App.jsx
+import { Routes, Route } from 'react-router-dom';
 import CustomerMainPage from './pages/CustomerMainPage';
 import ProductSearchPage from './pages/ProductSearchPage';
 import NavBar from './components/NavBar';
 import OrderPage from './pages/OrderPage';
+import CartPage from './pages/CartPage'; // Import CartPage
+import { CartProvider } from './context/CartContext';
 
 export default function App() {
-  // TODO: 之後從 Context 或 API 拿到真正的 user/cartCount
   const mockUser = { name: "小明" };
-  const mockCartCount = 3;
 
   return (
-    <>
-      <NavBar user={mockUser} cartCount={mockCartCount} />
+    <CartProvider>
+      <NavBar user={mockUser} />
       <Routes>
         <Route path="/" element={<CustomerMainPage />} />
         <Route path="/products" element={<ProductSearchPage />} />
         <Route path="/order" element={<OrderPage />} />
+        <Route path="/cart" element={<CartPage />} /> {/* Add CartPage route */}
       </Routes>
-    </>
-  )
+    </CartProvider>
+  );
 }
