@@ -2,8 +2,8 @@ import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 
-import productRouter from "./routes/productsRouter";
-import sequelize from './config/database';
+import productRouter from "./routes/productRouter.js";
+import sequelize from './config/database.js';
 
 const app = express();
 const port = process.env.PORT || 3001;
