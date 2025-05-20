@@ -23,6 +23,9 @@ export default function NavBar({ user, cartCount }) {
           <Nav.Link as={Link} to="/products">
             所有商品
           </Nav.Link>
+          <Nav.Link as={Link} to="/order">
+            訂購專區
+          </Nav.Link>
           <Nav.Link as={Link} to="/cart" className="nav-icon-link">
             <FaShoppingCart />
             購物車
