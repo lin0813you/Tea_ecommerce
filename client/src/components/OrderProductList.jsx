@@ -1,59 +1,94 @@
 // src/components/OrderProductList.jsx
-import React, { useState } from 'react';
-import { ListGroup, Image, Row, Col, Modal, Button } from 'react-bootstrap';
-import { mockProducts as products } from '../data/mockProducts.js';
+import React, { useState, useCallback, useMemo } from 'react'; // Added useMemo
+import { ListGroup, Image, Row, Col, Modal, Button, Spinner, Alert } from 'react-bootstrap';
 import ProductCustomization from './ProductCustomization';
-import { useCart } from '../context/CartContext'; // Import useCart
+import { useCart } from '../hooks/useCart';
+import { useProducts } from '../hooks/useProducts';
 
-const defaultCustomization = {
+const defaultCustomizationDetails = {
   size: 'L',
   ice: 'normal',
   sugar: 'full',
-  quantity: 1,
 };
+
+const defaultQuantity = 1;
 
 export default function OrderProductList() {
   const [showModal, setShowModal] = useState(false);
   const [currentProduct, setCurrentProduct] = useState(null);
-  const [currentCustomization, setCurrentCustomization] = useState(defaultCustomization);
-  const { addToCart } = useCart(); // Use the addToCart function from context
+  const [customizationOptions, setCustomizationOptions] = useState(defaultCustomizationDetails);
+  const [quantity, setQuantity] = useState(defaultQuantity);
 
-  const handleShowModal = (product) => {
+  const { addToCart } = useCart();
+  const { products, loading, error } = useProducts();
+
+  // Memoize initialDetails for ProductCustomization
+  const memoizedInitialDetails = useMemo(() => ({
+    ...defaultCustomizationDetails,
+    quantity: defaultQuantity,
+  }), []); // Depends on constants, so it's stable
+
+  const handleShowModal = useCallback((product) => {
     setCurrentProduct(product);
-    setCurrentCustomization(defaultCustomization);
+    // Reset to the memoized defaults, not new objects
+    setCustomizationOptions(memoizedInitialDetails); 
+    setQuantity(memoizedInitialDetails.quantity);
     setShowModal(true);
-  };
+  }, [memoizedInitialDetails]);
 
-  const handleCloseModal = () => {
+  const handleCloseModal = useCallback(() => {
     setShowModal(false);
     setCurrentProduct(null);
-  };
+  }, []);
 
-  const handleCustomizationChange = (customization) => {
-    setCurrentCustomization(customization);
-  };
+  const handleProductCustomizationChange = useCallback((customization) => {
+    setCustomizationOptions({ 
+      size: customization.size, 
+      ice: customization.ice, 
+      sugar: customization.sugar 
+    });
+    setQuantity(customization.quantity);
+  }, []);
 
-  const handleAddToCart = () => {
-    if (currentProduct && currentCustomization) {
-      addToCart(currentProduct, currentCustomization); // Call context function
+  const handleAddToCart = useCallback(() => {
+    if (currentProduct) {
+      addToCart(currentProduct, quantity, customizationOptions);
     }
     handleCloseModal();
-  };
+  }, [currentProduct, quantity, customizationOptions, addToCart, handleCloseModal]);
+
+  if (loading) {
+    return (
+      <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '50vh' }}>
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Loading products...</span>
+        </Spinner>
+      </div>
+    );
+  }
+
+  if (error) {
+    return <Alert variant="danger">Error loading products: {error}</Alert>;
+  }
+  
+  if (!products || products.length === 0) {
+    return <Alert variant="info">No products found.</Alert>;
+  }
 
   return (
     <>
       <Row>
         {products.map((product) => (
           <Col md={6} key={product.id} className="mb-3">
-            <ListGroup.Item action onClick={() => handleShowModal(product)} className="p-2 h-100">
-              <Row className="align-items-center">
-                <Col xs={3} md={3} lg={2}>
-                  <Image src={product.imageUrl} alt={product.name} fluid />
+            <ListGroup.Item action onClick={() => handleShowModal(product)} className="p-3 h-100 d-flex flex-column justify-content-between">
+              <Row className="align-items-center w-100">
+                <Col xs={3} md={3} lg={2} className="pe-2">
+                  <Image src={product.imageUrl || 'https://via.placeholder.com/100'} alt={product.name} fluid rounded />
                 </Col>
                 <Col xs={9} md={9} lg={10}>
                   <h5>{product.name}</h5>
-                  <p style={{ fontSize: '0.85rem', marginBottom: '0.25rem' }}>{product.description}</p>
-                  <h6>${product.price}</h6>
+                  <p className="text-muted small mb-1">{product.description || 'No description available.'}</p>
+                  <h6>NT${product.price}</h6>
                 </Col>
               </Row>
             </ListGroup.Item>
@@ -69,8 +104,8 @@ export default function OrderProductList() {
           <Modal.Body>
             <ProductCustomization 
               productName={currentProduct.name} 
-              initialDetails={defaultCustomization} 
-              onCustomizationChange={handleCustomizationChange} 
+              initialDetails={memoizedInitialDetails} // Use memoized version
+              onCustomizationChange={handleProductCustomizationChange} 
             />
           </Modal.Body>
           <Modal.Footer>

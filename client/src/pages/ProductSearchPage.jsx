@@ -2,54 +2,69 @@ import React, { useState, useEffect } from 'react';
 import SearchBar from '../components/SearchBar';
 import FilterBar from '../components/FilterBar';
 import ProductCard from '../components/ProductCard';
-import { mockProducts } from '../data/mockProducts'; // Assuming mock data for now
-import '../styles/pages/productSearchPage.scss'; // Import the new SCSS file
+import { useProducts } from '../hooks/useProducts'; // Import useProducts hook
+import '../styles/pages/productSearchPage.scss'; 
+import { Spinner, Alert, Container } from 'react-bootstrap'; // Added Spinner, Alert, Container
 
-
-const ProductSearchPage = () => { // Renamed component to ProductSearchPage
-  const [products, setProducts] = useState([]);
+const ProductSearchPage = () => {
+  const { products: allProducts, loading, error } = useProducts(); // Use the hook
   const [query, setQuery] = useState('');
   const [filter, setFilter] = useState('');
+  const [categories, setCategories] = useState(["All"]);
 
   useEffect(() => {
-    // In a real application, you would fetch data from an API here
-    // For this example, we'll use mock data
-    setProducts(mockProducts);
-  }, []);
+    if (allProducts && allProducts.length > 0) {
+      const uniqueCategories = ["All", ...Array.from(new Set(allProducts.map((p) => p.type)))];
+      setCategories(uniqueCategories);
+    }
+  }, [allProducts]);
 
-  // 1. 動態萃取出所有 category，前面加上「All」 (Assuming category is the correct prop for filtering)
-  const categories = ["All",
-    ...Array.from(new Set(products.map((p) => p.type)))
-  ];
-
-  const handleSearch = (searchQuery) => {
+  // This function will now be passed as onChange to SearchBar
+  const handleQueryChange = (searchQuery) => {
     setQuery(searchQuery);
   };
 
-  // 2. 先依 filter（類別）再依 query（關鍵字）過濾
-
-  const filteredProducts = products.filter(product => {
+  const filteredProducts = allProducts.filter(product => {
     const matchesQuery = product.name.toLowerCase().includes(query.toLowerCase());
     const matchesFilter = filter === '' || filter === 'All' || product.type === filter;
     return matchesQuery && matchesFilter;
   });
 
+  if (loading) {
+    return (
+      <Container className="d-flex justify-content-center align-items-center" style={{ minHeight: '80vh' }}>
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Loading products...</span>
+        </Spinner>
+      </Container>
+    );
+  }
+
+  if (error) {
+    return <Container className="mt-5 pt-5"><Alert variant="danger">Error loading products: {error}</Alert></Container>;
+  }
+
   return (
-    <div>
-      <SearchBar onSearch={handleSearch} />
-      <div className="filter-bar-container">
+    <Container className="mt-5 pt-3">
+      {/* Pass value and onChange to SearchBar */}
+      <SearchBar value={query} onChange={handleQueryChange} /> 
+      <div className="filter-bar-container mb-4">
         <FilterBar
           types={categories}
           activeType={filter}
-          onSelectType={(key) => setFilter(key)} // Using onSelectType to match FilterBar prop name
+          onSelectType={(key) => setFilter(key)}
         />
       </div>
-      <div className="product-list">
-        {filteredProducts.map(product => (
-          <ProductCard key={product.id} product={product} />
-        ))}
-      </div>
-    </div>
+      {filteredProducts.length > 0 ? (
+        <div className="product-list">
+          {filteredProducts.map(product => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
+      ) : (
+        <Alert variant="info">No products match your criteria.</Alert>
+      )}
+    </Container>
   );
 };
 

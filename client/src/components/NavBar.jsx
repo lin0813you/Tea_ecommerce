@@ -6,10 +6,14 @@ import Navbar from 'react-bootstrap/Navbar';
 import { Link } from 'react-router-dom';
 import { FaShoppingCart, FaUser } from 'react-icons/fa';
 import '../styles/components/NavBar.scss';
-import { useCart } from '../context/CartContext'; // Import useCart
+import { useCart } from '../hooks/useCart';
+import { useAuth } from '../hooks/useAuth';
 
-export default function NavBar({ user }) { // Removed cartCount from props
-  const { cartCount } = useCart(); // Get cartCount from context
+export default function NavBar() {
+  const { cartCount } = useCart();
+  const { user } = useAuth();
+
+  console.log('NavBar cartCount:', cartCount); // Debugging line
 
   return (
     <Navbar fixed="top" bg="light" className="navbar-teashop">

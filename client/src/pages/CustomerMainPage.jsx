@@ -1,38 +1,27 @@
 // src/pages/CustomerMainPage.jsx
-import { useEffect, useState } from "react";
-import { fetchProducts } from "../api/product";
+import React from 'react'; // Removed useEffect, useState
+// import { fetchProducts } from "../api/product"; // Removed old API call
 import Carousel from "../components/Carousel";
-import HeroSection from "../components/HeroSection"; // Import the new component
+import HeroSection from "../components/HeroSection";
 import ImageTextSection from "../components/ImageTextSection";
+// We are not directly using products or types in this component's JSX currently.
+// If HeroSection or ImageTextSection need products, they should use the useProducts hook themselves.
+// import { useProducts } from '../hooks/useProducts'; // Not strictly needed here if children fetch their own data
 
 export default function CustomerMainPage() {
-  const [products, setProducts] = useState([]);
-  const [query, setQuery] = useState("");
+  // const { products, loading, error } = useProducts(); // Products would be available here if needed
 
-  useEffect(() => {
-    fetchProducts()
-      .then((data) => {
-        setProducts(Array.isArray(data) ? data : data.products);
-      })
-      .catch((err) => console.error(err));
-  }, []);
-
-  // 動態萃取出所有 type，前面加上「All」
-  const types = ["All",
-    ...Array.from(new Set(products.map((p) => p.type)))
-  ];
+  // If loading or error states need to be handled at this page level:
+  // if (loading) return <p>Loading...</p>;
+  // if (error) return <p>Error loading page: {error}</p>;
 
   return (
     <>
-      {/* 2. 主內容容器 */}
-      <div className="container py-4 main-container">
-        {/* 3. 輪播 */}
+      {/* Main content container */}
+      {/* container class might be from bootstrap, ensure it's used correctly or styled */}
+      <div className="py-4 main-container"> {/* Removed bootstrap container, assuming main-container handles layout */}
         <Carousel />
-
-        {/* Add the new ImageTextSection component here */}
         <ImageTextSection />
-
-        {/* Add the new HeroSection component here */}
         <HeroSection />
       </div>
     </>
