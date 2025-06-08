@@ -10,6 +10,8 @@ import seedUsers from './seeders/seedUsers.js';
 import seedInventory from './seeders/seedInventory.js';
 import seedProducts from './seeders/seedProducts.js';
 import seedOrders from './seeders/seedOrders.js';
+// Initialize model associations
+import './models/associations.js';
 
 const app = express();
 const port = process.env.PORT || 3001;
