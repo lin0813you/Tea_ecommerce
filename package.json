@@ -1,0 +1,28 @@
+{
+  "name": "tea_ecommerce",
+  "private": "true",
+  "workspaces":[
+    "client",
+    "server"
+  ],
+  "version": "1.0.0",
+  "description": "This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.",
+  "main": "start.js",
+  "directories": {
+    "doc": "doc"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install-all": "npm install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lin0813you/Tea_ecommerce.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lin0813you/Tea_ecommerce/issues"
+  },
+  "homepage": "https://github.com/lin0813you/Tea_ecommerce#readme"
+}
