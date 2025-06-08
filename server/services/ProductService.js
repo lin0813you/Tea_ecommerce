@@ -12,15 +12,15 @@ class ProductService {
   }
 
   /** 新增商品 */
-  static async create({ name, description, price }) {
-    return await Product.create({ name, description, price });
+  static async create({ name, description, price, imageUrl, type }) {
+    return await Product.create({ name, description, price, imageUrl, type });
   }
 
   /** 更新商品 */
-  static async update(id, { name, description, price }) {
+  static async update(id, { name, description, price, imageUrl, type }) {
     const product = await Product.findByPk(id);
     if (!product) throw new Error('Product not found');
-    return await product.update({ name, description, price });
+    return await product.update({ name, description, price, imageUrl, type });
   }
 
   /** 刪除商品 */

@@ -21,6 +21,12 @@ Product.init(
          type: DataTypes.DOUBLE,
          allowNull: false,
        },
+       imageUrl: {
+         type: DataTypes.STRING,
+       },
+       type: {
+         type: DataTypes.STRING,
+       },
    },{
        sequelize,
        modelName: 'Product',
