@@ -13,6 +13,8 @@ erDiagram
     string name
     string description
     double price
+    string imageUrl
+    string type
   }
   INVENTORY {
     int productId PK
