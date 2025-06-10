@@ -6,19 +6,6 @@ import { FaShoppingCart, FaUser, FaTachometerAlt } from 'react-icons/fa'; // Add
 // import { useCart } from '../hooks/useCart';
 const useCart = () => ({ cartCount: 0 }); // Mocking useCart for now
 
-// Helper function to translate role to Chinese (kept for potential future use)
-const getRoleDisplayName = (role) => {
-  switch (role) {
-    case 'clerk':
-      return '店員';
-    case 'customer':
-      return '顧客';
-    case 'admin':
-      return '管理員';
-    default:
-      return role;
-  }
-};
 
 export default function NavBar({ user, onLogout }) {
   const { cartCount } = useCart();

@@ -8,7 +8,13 @@ export function useClerkOrders() {
   useEffect(() => {
     const load = async () => {
       const data = await apiFetchOrders();
-      setOrders(data);
+      const normalized = data.map((order) => ({
+        ...order,
+        // Sequelize returns associated items under `OrderItems` by default.
+        // Normalize to `items` for the UI components.
+        items: order.items || order.OrderItems || [],
+      }));
+      setOrders(normalized);
     };
     load();
   }, []);
