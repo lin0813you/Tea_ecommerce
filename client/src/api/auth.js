@@ -1,4 +1,3 @@
-import axios from "axios";
 import { mockAllUsers } from "../data/mockAllUsers";
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL;
