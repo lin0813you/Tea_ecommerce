@@ -1,5 +1,5 @@
 import { Sequelize, DataTypes, Model } from "sequelize";
-import sequelize from "../config/database";
+import sequelize from "../config/database.js";
 
 class Product extends Model{}
 
@@ -20,6 +20,12 @@ Product.init(
        price: {
          type: DataTypes.DOUBLE,
          allowNull: false,
+       },
+       imageUrl: {
+         type: DataTypes.STRING,
+       },
+       type: {
+         type: DataTypes.STRING,
        },
    },{
        sequelize,
