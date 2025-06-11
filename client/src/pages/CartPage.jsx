@@ -26,16 +26,18 @@ export default function CartPage() {
   const handleSubmitOrder = async () => {
     if (!user) return;
     try {
-      await createOrder({
-        customerName: user.name || user.username,
-        items: cartItems.map((i) => ({
-          name: i.name,
-          quantity: i.quantity,
-          size: i.customization?.size,
-          sugar: i.customization?.sugar,
-          ice: i.customization?.ice,
-        })),
-      });
+        await createOrder({
+          customerName: user.name || user.username,
+          items: cartItems.map((i) => ({
+            name: i.name,
+            quantity: i.quantity,
+            customization: {
+              size: i.customization?.size,
+              sugar: i.customization?.sugar,
+              ice: i.customization?.ice,
+            },
+          })),
+        });
       clearCart();
       alert('訂單已經送出');
     } catch (err) {

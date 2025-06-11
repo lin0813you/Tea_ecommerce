@@ -3,32 +3,32 @@ import React, { useState, useEffect } from 'react';
 import { Form, ButtonGroup, ToggleButton, Card, InputGroup, Button } from 'react-bootstrap';
 
 const sizeOptions = [
-  { name: '中杯', value: 'M' },
-  { name: '大杯', value: 'L' },
+  { name: '中杯', value: '中杯' },
+  { name: '大杯', value: '大杯' },
 ];
 
 const iceOptions = [
-  { name: '正常冰', value: 'normal' },
-  { name: '少冰', value: 'less' },
-  { name: '微冰', value: 'light' },
-  { name: '去冰', value: 'none' },
+  { name: '正常冰', value: '正常冰' },
+  { name: '少冰', value: '少冰' },
+  { name: '微冰', value: '微冰' },
+  { name: '去冰', value: '去冰' },
   // { name: '常溫', value: 'room' }, // Example, if needed
   // { name: '熱', value: 'hot' },   // Example, if needed
 ];
 
 const sugarOptions = [
-  { name: '全糖', value: 'full' },
-  { name: '七分糖', value: '70' }, // Changed for consistency if values are percentages
-  { name: '五分糖', value: '50' }, // Changed (半糖)
-  { name: '三分糖', value: '30' },
-  // { name: '一分糖', value: '10' }, // Example
-  { name: '無糖', value: '0' },   // Changed (無糖)
+  { name: '全糖', value: '全糖' },
+  { name: '七分糖', value: '七分糖' },
+  { name: '五分糖', value: '五分糖' },
+  { name: '三分糖', value: '三分糖' },
+  // { name: '一分糖', value: '一分糖' }, // Example
+  { name: '無糖', value: '無糖' },
 ];
 
 export default function ProductCustomization({ productName, onCustomizationChange, initialDetails }) {
-  const [selectedSize, setSelectedSize] = useState(initialDetails?.size || 'L'); // Default to L as per image
-  const [selectedIce, setSelectedIce] = useState(initialDetails?.ice || 'normal');
-  const [selectedSugar, setSelectedSugar] = useState(initialDetails?.sugar || 'full');
+  const [selectedSize, setSelectedSize] = useState(initialDetails?.size || '大杯');
+  const [selectedIce, setSelectedIce] = useState(initialDetails?.ice || '正常冰');
+  const [selectedSugar, setSelectedSugar] = useState(initialDetails?.sugar || '全糖');
   const [quantity, setQuantity] = useState(initialDetails?.quantity || 1);
 
   useEffect(() => {
@@ -48,9 +48,9 @@ export default function ProductCustomization({ productName, onCustomizationChang
 
   // Reset to initial details when product changes or modal reopens for a new product
   useEffect(() => {
-    setSelectedSize(initialDetails?.size || 'L');
-    setSelectedIce(initialDetails?.ice || 'normal');
-    setSelectedSugar(initialDetails?.sugar || 'full');
+    setSelectedSize(initialDetails?.size || '大杯');
+    setSelectedIce(initialDetails?.ice || '正常冰');
+    setSelectedSugar(initialDetails?.sugar || '全糖');
     setQuantity(initialDetails?.quantity || 1);
   }, [productName, initialDetails]);
 

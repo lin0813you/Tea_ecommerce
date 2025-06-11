@@ -7,9 +7,9 @@ import { useProducts } from '../hooks/useProducts';
 import { useAuth } from '../hooks/useAuth';
 
 const defaultCustomizationDetails = {
-  size: 'L',
-  ice: 'normal',
-  sugar: 'full',
+  size: '大杯',
+  ice: '正常冰',
+  sugar: '全糖',
 };
 
 const defaultQuantity = 1;
