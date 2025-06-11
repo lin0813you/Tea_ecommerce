@@ -1,7 +1,7 @@
 import User from '../models/User.js';
 
 const users = [
-  { id: 'clerk001', username: '0000', password: '0000', role: 'clerk', name: '店員一號' },
+  { phone: '0912345678', username: '0000', password: '0000', role: 'clerk', name: '店員一號' },
 ];
 
 export default async function seedUsers() {
