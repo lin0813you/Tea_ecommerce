@@ -1,19 +1,42 @@
-import { mockAllUsers } from "../data/mockAllUsers";
-
-const API_BASE = import.meta.env.VITE_API_BASE_URL;
-
 export async function login(username, password) {
-  const user = mockAllUsers.find(u => u.username === username && u.password === password);
-  if (user) {
-    return Promise.resolve(user);
+  const res = await fetch(`/api/auth/login`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username, password }),
+  });
+  if (!res.ok) {
+    // Try to get error message from response body
+    let errorMsg = "Invalid credentials";
+    try {
+      const errorData = await res.json();
+      errorMsg = errorData.message || errorMsg;
+    } catch {
+      // Ignore if response is not JSON or other error
+    }
+    throw new Error(errorMsg);
   }
-  // const res = await axios.post(`${API_BASE}/auth/login`, { username, password });
-  // return res.data;
-  return Promise.reject(new Error("Invalid credentials"));
+  const data = await res.json();
+  return data; // Assuming the backend returns user data/token directly
 }
 
-export async function register(data) {
-  // return axios.post(`${API_BASE}/auth/register`, data);
-  console.log("Would register user", data);
-  return Promise.resolve();
+export async function register(userData) {
+  // Renamed 'data' to 'userData' for clarity
+  const res = await fetch(`/api/auth/register`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(userData),
+  });
+  if (!res.ok) {
+    // Try to get error message from response body
+    let errorMsg = "Registration failed";
+    try {
+      const errorData = await res.json();
+      errorMsg = errorData.message || errorMsg;
+    } catch {
+      // Ignore if response is not JSON or other error
+    }
+    throw new Error(errorMsg);
+  }
+  const data = await res.json();
+  return data; // Assuming the backend returns some data upon successful registration
 }

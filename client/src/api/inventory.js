@@ -1,14 +1,12 @@
-const API_BASE = import.meta.env.VITE_API_BASE_URL;
-
 export async function fetchInventory() {
-  const res = await fetch(`${API_BASE}/inventory`);
+  const res = await fetch(`/api/inventory`); // Changed to use proxy
   if (!res.ok) {
-    throw new Error('Failed to fetch inventory');
+    throw new Error("Failed to fetch inventory");
   }
   const data = await res.json();
   return data.data;
 }
 
 export async function requestStock(itemId) {
-  await fetch(`${API_BASE}/inventory/${itemId}/request`, { method: 'POST' });
+  await fetch(`/api/inventory/${itemId}/request`, { method: "POST" }); // Changed to use proxy
 }
