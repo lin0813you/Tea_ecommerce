@@ -21,7 +21,7 @@ export const getOrder = async (req, res, next) => {
 
 export const createOrder = async (req, res, next) => {
   try {
-    const newOrder = await OrderService.create(req.body);
+    const newOrder = await OrderService.placeOrder(req.body);
     res.status(201).json({ success: true, data: newOrder });
   } catch (err) {
     next(err);
