@@ -3,10 +3,13 @@ import React from 'react';
 import { Container, Row, Col, Card, ListGroup, Image, Button, Form } from 'react-bootstrap';
 import { useCart } from '../hooks/useCart'; // Updated import path
 import { Link } from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth';
+import { createOrder } from '../api/order';
 import { FaTrash } from 'react-icons/fa';
 
 export default function CartPage() {
   const { cartItems, updateQuantity, removeFromCart, clearCart } = useCart();
+  const { user } = useAuth();
 
   const calculateSubtotal = (item) => {
     return item.price * item.quantity;
@@ -18,6 +21,27 @@ export default function CartPage() {
 
   const handleQuantityChange = (cartItemId, newQuantity) => {
     updateQuantity(cartItemId, parseInt(newQuantity, 10));
+  };
+
+  const handleSubmitOrder = async () => {
+    if (!user) return;
+    try {
+      await createOrder({
+        customerName: user.name || user.username,
+        items: cartItems.map((i) => ({
+          name: i.name,
+          quantity: i.quantity,
+          size: i.customization?.size,
+          sugar: i.customization?.sugar,
+          ice: i.customization?.ice,
+        })),
+      });
+      clearCart();
+      alert('訂單已經送出');
+    } catch (err) {
+      console.error(err);
+      alert('送出訂單失敗');
+    }
   };
 
   if (cartItems.length === 0) {
@@ -94,9 +118,15 @@ export default function CartPage() {
                 <span>總金額</span>
                 <span>NT${calculateTotal()}</span>
               </div>
-              <Button variant="primary" className="w-100 mt-3" as={Link} to="/checkout"> {/* Assuming a checkout page */}
-                前往結帳
-              </Button>
+              {user ? (
+                <Button variant="primary" className="w-100 mt-3" onClick={handleSubmitOrder}>
+                  送出訂單
+                </Button>
+              ) : (
+                <Button variant="primary" className="w-100 mt-3" as={Link} to="/login">
+                  前往結帳
+                </Button>
+              )}
               <Button variant="outline-danger" className="w-100 mt-2" onClick={clearCart}>
                 清空購物車
               </Button>
