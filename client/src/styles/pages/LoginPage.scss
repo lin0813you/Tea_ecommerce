@@ -17,13 +17,14 @@
     width: 100%;
     max-width: 400px;
     padding: 1.5rem; // Default padding for form content
-    @media (min-width: 576px) { // Bootstrap 'sm' breakpoint
-        padding: 2rem; // Increased padding for form content on larger screens
-    }
     border: 1px solid #ddd;
     border-radius: 8px;
     background-color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+    @media (min-width: 576px) { // Bootstrap 'sm' breakpoint
+        padding: 2rem; // Increased padding for form content on larger screens
+    }
 
     .form-label {
       font-weight: bold;
