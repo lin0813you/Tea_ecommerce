@@ -2,7 +2,10 @@ import OrderService from '../services/OrderService.js';
 
 export const getOrders = async (req, res, next) => {
   try {
-    const orders = await OrderService.getAll();
+    const { customerName } = req.query;
+    const orders = customerName
+      ? await OrderService.getByCustomerName(customerName)
+      : await OrderService.getAll();
     res.json({ success: true, data: orders });
   } catch (err) {
     next(err);
@@ -34,6 +37,15 @@ export const createOrder = async (req, res, next) => {
 export const updateOrderStatus = async (req, res, next) => {
   try {
     const updated = await OrderService.updateStatus(req.params.id, req.body.status);
+    res.json({ success: true, data: updated });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const cancelOrder = async (req, res, next) => {
+  try {
+    const updated = await OrderService.cancelOrder(req.params.id);
     res.json({ success: true, data: updated });
   } catch (err) {
     next(err);

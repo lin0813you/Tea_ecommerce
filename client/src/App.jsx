@@ -9,6 +9,7 @@ import CartPage from './pages/CartPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import ClerkDashboard from './pages/ClerkDashboard'; // Import ClerkDashboard
+import CustomerOrdersPage from './pages/CustomerOrdersPage';
 
 // import { CartProvider } from './context/CartContext'; // Removed CartProvider
 
@@ -87,6 +88,16 @@ export default function App() {
         <Route path="/products" element={<ProductSearchPage />} />
         <Route path="/order" element={<OrderPage />} /> {/* Consider if this needs protection */}
         <Route path="/cart" element={<CartPage />} />   {/* Consider if this needs protection */}
+        <Route
+          path="/my-orders"
+          element={
+            loggedInUser && loggedInUser.role === 'customer' ? (
+              <CustomerOrdersPage />
+            ) : (
+              <Navigate to="/login" state={{ message: '請先登入以查詢訂單' }} />
+            )
+          }
+        />
 
         {/* Fallback for any other unmatched routes */}
         <Route path="*" element={<Navigate to={loggedInUser && loggedInUser.role === 'clerk' ? "/clerk-dashboard" : "/"} />} />
