@@ -24,6 +24,9 @@ export const createOrder = async (req, res, next) => {
     const newOrder = await OrderService.placeOrder(req.body);
     res.status(201).json({ success: true, data: newOrder });
   } catch (err) {
+    if (err.message === 'customerName is required') {
+      return res.status(400).json({ success: false, message: err.message });
+    }
     next(err);
   }
 };

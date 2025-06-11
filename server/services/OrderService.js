@@ -15,6 +15,9 @@ class OrderService {
   }
 
   static async placeOrder({ customerName, items }) {
+    if (!customerName) {
+      throw new Error('customerName is required');
+    }
     const id = `ORD${Date.now()}`;
     const order = await Order.create({ id, customerName, status: '新訂單' });
     if (Array.isArray(items) && items.length > 0) {

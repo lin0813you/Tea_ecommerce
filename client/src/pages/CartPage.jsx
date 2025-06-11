@@ -27,7 +27,7 @@ export default function CartPage() {
     if (!user) return;
     try {
       await createOrder({
-        customerName: user.name,
+        customerName: user.name || user.username,
         items: cartItems.map((i) => ({
           name: i.name,
           quantity: i.quantity,
