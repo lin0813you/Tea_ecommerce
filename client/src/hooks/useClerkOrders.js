@@ -1,23 +1,38 @@
 // client/src/hooks/useClerkOrders.js
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { fetchOrders as apiFetchOrders, updateOrderStatus as apiUpdateOrderStatus } from '../api/order';
 
 export function useClerkOrders() {
   const [orders, setOrders] = useState([]);
 
-  useEffect(() => {
-    const load = async () => {
-      const data = await apiFetchOrders();
-      const normalized = data.map((order) => ({
-        ...order,
-        // Sequelize returns associated items under `OrderItems` by default.
-        // Normalize to `items` for the UI components.
-        items: order.items || order.OrderItems || [],
-      }));
-      setOrders(normalized);
-    };
-    load();
+  const load = useCallback(async () => {
+    const data = await apiFetchOrders();
+    const normalized = data.map((order) => ({
+      ...order,
+      // Sequelize returns associated items under `OrderItems` by default.
+      // Normalize to `items` for the UI components.
+      items: order.items || order.OrderItems || [],
+    }));
+    setOrders(normalized);
   }, []);
+
+  useEffect(() => {
+    load();
+
+    const handleStorage = (e) => {
+      if (e.key === 'ordersUpdated') {
+        load();
+      }
+    };
+    const handleUpdated = () => load();
+
+    window.addEventListener('storage', handleStorage);
+    window.addEventListener('ordersUpdated', handleUpdated);
+    return () => {
+      window.removeEventListener('storage', handleStorage);
+      window.removeEventListener('ordersUpdated', handleUpdated);
+    };
+  }, [load]);
 
   const updateOrderStatus = async (orderId, newStatus) => {
     setOrders(prevOrders =>
