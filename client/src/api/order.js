@@ -17,10 +17,17 @@ export async function updateOrderStatus(orderId, status) {
 }
 
 export async function createOrder(orderData) {
-  await fetch(`/api/order`, {
-    // Changed to use proxy
+  const res = await fetch(`/api/order`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(orderData),
   });
+  if (!res.ok) {
+    throw new Error("Failed to create order");
+  }
+  // Notify all tabs that orders have been updated
+  localStorage.setItem("ordersUpdated", Date.now().toString());
+  window.dispatchEvent(new Event("ordersUpdated"));
+  const data = await res.json();
+  return data.data;
 }
