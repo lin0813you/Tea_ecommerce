@@ -51,6 +51,11 @@ export default function NavBar({ user, onLogout }) {
                     訂購專區
                   </Nav.Link>
                 )}
+                {user && user.role === 'customer' && (
+                  <Nav.Link as={Link} to="/my-orders">
+                    訂單查詢
+                  </Nav.Link>
+                )}
                 {/* Show Cart link only if user is a customer or not logged in */}
                 {(!user || user.role === 'customer') && (
                   <Nav.Link as={Link} to="/cart" className="nav-icon-link">

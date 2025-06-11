@@ -6,6 +6,13 @@ class OrderService {
     return await Order.findAll({ include: OrderItem });
   }
 
+  static async getByCustomerName(customerName) {
+    return await Order.findAll({
+      where: { customerName },
+      include: OrderItem,
+    });
+  }
+
   static async getById(id) {
     return await Order.findByPk(id, { include: OrderItem });
   }
@@ -39,6 +46,15 @@ class OrderService {
     const order = await Order.findByPk(id);
     if (!order) throw new Error('Order not found');
     return await order.update({ status });
+  }
+
+  static async cancelOrder(id) {
+    const order = await Order.findByPk(id);
+    if (!order) throw new Error('Order not found');
+    if (!['新訂單', '製作中'].includes(order.status)) {
+      throw new Error('Order cannot be cancelled');
+    }
+    return await order.update({ status: '已取消' });
   }
 }
 
