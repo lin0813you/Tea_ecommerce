@@ -5,6 +5,7 @@ import cors from 'cors';
 import productRouter from "./routes/productRouter.js";
 import orderRouter from "./routes/orderRouter.js";
 import inventoryRouter from "./routes/inventoryRouter.js";
+import authRouter from "./routes/authRouter.js";
 import sequelize from './config/database.js';
 import seedUsers from './seeders/seedUsers.js';
 import seedInventory from './seeders/seedInventory.js';
@@ -22,6 +23,7 @@ app.use(express.json());
 app.use("/api/product", productRouter);
 app.use("/api/order", orderRouter);
 app.use("/api/inventory", inventoryRouter);
+app.use("/api/auth", authRouter);
 
 app.get('/', (req, res) => {
   res.send('Server is running!');

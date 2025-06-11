@@ -3,7 +3,6 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 import LoginForm from '../components/LoginForm';
-import { mockAllUsers } from '../data/mockAllUsers';
 
 // The onUserAuthenticated prop is crucial for App.jsx to know about the login
 export default function LoginPage({ onUserAuthenticated }) { 
@@ -45,7 +44,6 @@ export default function LoginPage({ onUserAuthenticated }) {
         <Col md={6} lg={4}>
           <LoginForm
             onLoginAttempt={handleLoginAttempt}
-            mockUsers={mockAllUsers}
             title="系統統一登入"
           />
         </Col>
