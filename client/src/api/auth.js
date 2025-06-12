@@ -16,7 +16,7 @@ export async function login(username, password) {
     throw new Error(errorMsg);
   }
   const data = await res.json();
-  return data; // Assuming the backend returns user data/token directly
+  return data.data;
 }
 
 export async function register(userData) {
@@ -38,5 +38,5 @@ export async function register(userData) {
     throw new Error(errorMsg);
   }
   const data = await res.json();
-  return data; // Assuming the backend returns some data upon successful registration
+  return data.data;
 }

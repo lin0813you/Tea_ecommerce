@@ -2,31 +2,49 @@
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { register as registerApi } from '../api/auth';
 
 export default function RegisterForm({ className }) { // Add className prop
-  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Handle registration logic here
     if (password !== confirmPassword) {
       alert("Passwords don't match!");
       return;
     }
-    console.log('Register submitted', { email, password });
+    try {
+      await registerApi({ phone, username, password });
+      alert('Registration successful');
+    } catch (err) {
+      alert(err.message);
+    }
   };
 
   return (
     <Form onSubmit={handleSubmit} className={className}> {/* Use className prop */}
-      <Form.Group className="mb-3" controlId="formBasicEmail">
-        <Form.Label>電子郵件</Form.Label>
+      <Form.Group className="mb-3" controlId="formPhone">
+        <Form.Label>手機號碼</Form.Label>
         <Form.Control
-          type="email"
-          placeholder="輸入電子郵件"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          type="text"
+          placeholder="輸入手機號碼"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+          required
+        />
+      </Form.Group>
+
+      <Form.Group className="mb-3" controlId="formUsername">
+        <Form.Label>帳號</Form.Label>
+        <Form.Control
+          type="text"
+          placeholder="輸入帳號"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          required
         />
       </Form.Group>
 

@@ -4,11 +4,12 @@ import { ListGroup, Image, Row, Col, Modal, Button, Spinner, Alert } from 'react
 import ProductCustomization from './ProductCustomization';
 import { useCart } from '../hooks/useCart';
 import { useProducts } from '../hooks/useProducts';
+import { useAuth } from '../hooks/useAuth';
 
 const defaultCustomizationDetails = {
-  size: 'L',
-  ice: 'normal',
-  sugar: 'full',
+  size: '大杯',
+  ice: '正常冰',
+  sugar: '全糖',
 };
 
 const defaultQuantity = 1;
@@ -20,6 +21,7 @@ export default function OrderProductList() {
   const [quantity, setQuantity] = useState(defaultQuantity);
 
   const { addToCart } = useCart();
+  const { user } = useAuth();
   const { products, loading, error } = useProducts();
 
   // Memoize initialDetails for ProductCustomization
@@ -51,11 +53,16 @@ export default function OrderProductList() {
   }, []);
 
   const handleAddToCart = useCallback(() => {
+    if (!user) {
+      alert('請先登入');
+      handleCloseModal();
+      return;
+    }
     if (currentProduct) {
       addToCart(currentProduct, quantity, customizationOptions);
     }
     handleCloseModal();
-  }, [currentProduct, quantity, customizationOptions, addToCart, handleCloseModal]);
+  }, [user, currentProduct, quantity, customizationOptions, addToCart, handleCloseModal]);
 
   if (loading) {
     return (
