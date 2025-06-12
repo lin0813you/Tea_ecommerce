@@ -8,6 +8,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: '/Tea_ecommerce/',  // GitHub 儲存庫名稱
   plugins: [react(), tsconfigPaths()],
   resolve: {
     alias: {
