@@ -1,12 +1,20 @@
 // client/src/pages/ClerkDashboard.jsx
-import React from 'react';
-import { Container, Row, Col, Card, Button, ListGroup, Badge, Alert } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Container, Row, Col, Card, Button, ListGroup, Badge, Alert, Dropdown } from 'react-bootstrap';
 import { useClerkOrders } from '../hooks/useClerkOrders';
 import { useClerkInventory } from '../hooks/useClerkInventory';
 
 export default function ClerkDashboard() {
   const { orders, updateOrderStatus } = useClerkOrders();
   const { inventory, lowStockAlertItems, requestStock } = useClerkInventory();
+
+  const [statusFilter, setStatusFilter] = useState('全部');
+
+  const filteredOrders = statusFilter === '全部'
+    ? orders
+    : orders.filter(order => order.status === statusFilter);
+
+  const statusOptions = ['全部', '新訂單', '製作中', '已完成', '已取消'];
 
   const handleUpdateOrderStatus = (orderId, newStatus) => {
     updateOrderStatus(orderId, newStatus);
@@ -40,11 +48,27 @@ export default function ClerkDashboard() {
           <Card className="shadow-sm">
             <Card.Header as="h2" className="h5 bg-primary text-white">即時訂單管理</Card.Header>
             <Card.Body>
-              {orders.length === 0 ? (
-                <p>目前沒有新訂單。</p>
+              <Dropdown className="mb-3">
+                <Dropdown.Toggle variant="outline-secondary" id="status-filter">
+                  顯示狀態：{statusFilter}
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  {statusOptions.map(option => (
+                    <Dropdown.Item
+                      key={option}
+                      active={statusFilter === option}
+                      onClick={() => setStatusFilter(option)}
+                    >
+                      {option}
+                    </Dropdown.Item>
+                  ))}
+                </Dropdown.Menu>
+              </Dropdown>
+              {filteredOrders.length === 0 ? (
+                <p>目前沒有符合條件的訂單。</p>
               ) : (
                 <ListGroup variant="flush">
-                  {orders.map(order => (
+                  {filteredOrders.map(order => (
                     <ListGroup.Item key={order.id} className="mb-3 border rounded p-3">
                       <Row className="align-items-center">
                         <Col md={2}><strong>訂單號:</strong><br/>{order.id}</Col>
