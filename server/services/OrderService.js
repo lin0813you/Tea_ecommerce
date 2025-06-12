@@ -51,7 +51,7 @@ class OrderService {
   static async cancelOrder(id) {
     const order = await Order.findByPk(id);
     if (!order) throw new Error('Order not found');
-    if (!['新訂單', '製作中'].includes(order.status)) {
+    if (order.status !== '新訂單') {
       throw new Error('Order cannot be cancelled');
     }
     return await order.update({ status: '已取消' });

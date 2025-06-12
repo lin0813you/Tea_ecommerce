@@ -34,9 +34,11 @@ export default function CustomerOrdersPage() {
                         <Col xs={5}><strong>訂單號:</strong> {order.id}</Col>
                         <Col xs={4}><Badge bg={order.status === '新訂單' ? 'info' : 'warning'}>{order.status}</Badge></Col>
                         <Col xs={3} className="text-end">
-                          <Button variant="outline-danger" size="sm" onClick={() => cancelOrder(order.id)}>
-                            取消
-                          </Button>
+                          {order.status === '新訂單' && (
+                            <Button variant="outline-danger" size="sm" onClick={() => cancelOrder(order.id)}>
+                              取消
+                            </Button>
+                          )}
                         </Col>
                       </Row>
                       {renderItems(order)}
