@@ -18,7 +18,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "http://localhost:3000", // Assuming your backend is on port 3000
+        target: "https://2a80-2001-b011-e606-b668-8e1-1f4d-8f00-6f1f.ngrok-free.app", // Assuming your backend is on port 3000
         changeOrigin: true,
       },
     },
